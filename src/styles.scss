@@ -1,1 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
+$dark-blue: #232D3F;
+$dark-green: #005B41;
+$green: #008170;
+
+$green-correct: rgba(41, 168, 98, 0.35);
+$red-incorrect: rgba(166, 44, 43, 0.35);
+
+$light-gray: #f8f9fa;
+$gray: #6c757d;
+$dark-gray: #272727;
+$dark: #0F0F0F;
+
+
+.justify-start {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.justify-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.justify-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.justify-around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+app-common-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid $light-gray;
+    border-radius: 5px;
+    background-color: #fff;
+    color: $dark-gray;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    cursor: pointer;
+}
+
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    font-family: ui-monospace, "Helvetica Neue", sans-serif;
+    margin: 0;
+    background-color: $dark;
+    color: $light-gray;
+}

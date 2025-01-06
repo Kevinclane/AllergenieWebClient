@@ -1,0 +1,7 @@
+@import "../../../../styles.scss";
+
+.container {
+    .row {
+        @extend .justify-around;
+    }
+}
