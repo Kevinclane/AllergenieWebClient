@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
     template: `
         <div class="container">
-            <div class="sliding-header">
+            <div class="header">
                 <div class="buttons">
                     <mat-icon class="edit">edit</mat-icon>
                     <mat-icon class="delete">delete</mat-icon>

@@ -2,8 +2,9 @@
 
 .container {
     margin-top: 5vh;
+    
     .row {
         @extend .justify-around;
-        
+        margin: 0 10rem;
     }
 }
