@@ -1,0 +1,18 @@
+
+@import '../../../styles.scss';
+
+.header {
+    background-color: $dark-primary;
+    height: 8dvh;
+    text-align: center;
+    color: $light-gray;
+    font-size: 2.5rem;
+    @extend .justify-between;
+    position: sticky;
+    top: 0;
+
+    div {
+        margin: 1rem;
+    }
+
+}

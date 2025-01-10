@@ -1,0 +1,54 @@
+@import '../../../styles.scss';
+
+.container {
+    color: $dark-gray;
+    .row {
+        .close {
+            padding: 1rem;
+            cursor: pointer;
+        }
+
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 80%;
+        margin-left: 10%;
+
+        .form-data {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            #name {
+                padding: .25rem;
+                height: 1.5rem;
+            }
+            
+            .errors {
+                color: $red;
+                font-size: .75rem;
+                font-style: italic;
+            }
+
+            select {
+                height: 1.5rem;
+                option {
+                    height: 1.5rem;
+                }
+            }
+
+            .restaurants {
+                margin-top: 1rem;
+            }
+
+        }      
+        
+        button {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+    }
+}

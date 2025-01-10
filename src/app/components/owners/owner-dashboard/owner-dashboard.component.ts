@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Restaurant } from '../../../models/restaurant.model';
 import { CommonCardComponent } from "../../common/common-card.component";
+import { Utils } from '../../../services/utils';
 
 @Component({
   template: `
@@ -29,7 +30,6 @@ import { CommonCardComponent } from "../../common/common-card.component";
 export class OwnerDashboardComponent implements OnInit {
   restaurants: Restaurant[] = [];
 
-
   constructor(
     private apiService: ApiService
   ) { }
@@ -44,7 +44,7 @@ export class OwnerDashboardComponent implements OnInit {
     return [
       restaurant.streetAddress,
       `${restaurant.city}, ${restaurant.state} ${restaurant.zipCode}`,
-      restaurant.phoneNumber
+      Utils.formatPhoneNumber(restaurant.phoneNumber)
     ];
   }
 
