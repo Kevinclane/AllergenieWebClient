@@ -1,7 +1,9 @@
 @import '../../../../../styles.scss';
 
 .container {
+    margin-top: 5vh;
     .row {
         @extend .justify-around;
+        
     }
 }

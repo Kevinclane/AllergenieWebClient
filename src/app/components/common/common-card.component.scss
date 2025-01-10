@@ -1,0 +1,49 @@
+@import "../../../styles.scss";
+
+.container {
+    margin-top: 20px;
+    
+    .sliding-header {
+        background-color: $dark-gray;
+        padding: .5rem;
+        color: $light-gray;
+        border-radius: 10px 10px 0 0;
+    
+        .buttons {
+            display: flex;
+            justify-content: end;
+
+            .edit {
+                margin-left: 1rem;
+                cursor: pointer;
+                &:hover {
+                    color: $primary;
+                }
+            }
+
+            .delete {
+                margin-left: 1rem;
+                cursor: pointer;
+                &:hover {
+                    color: $red;
+                }
+            }
+        }
+    }
+
+    .main-content {
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
+        background-color: $light-gray;
+        color: $dark-gray;
+        width: 20vw;
+        cursor: pointer;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+}
+
