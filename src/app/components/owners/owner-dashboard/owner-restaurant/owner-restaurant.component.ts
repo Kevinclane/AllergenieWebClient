@@ -6,7 +6,7 @@ import { CommonModule } from "@angular/common";
 import { CommonCardComponent } from "../../../common/common-card.component";
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { NewMenuDialogComponent } from "../../../dialogs/new-edit-menu-dialog.component";
+import { NewMenuDialogComponent } from "../../../dialogs/new-menu-dialog.component";
 import { EditMenuDialogComponent } from "../../../dialogs/edit-menu-dialog.component";
 
 

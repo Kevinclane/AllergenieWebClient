@@ -1,6 +1,6 @@
 import { Restaurant } from "../restaurant.model";
 
-export interface NewEditMenuRequest {
+export interface NewEditMenuResponse {
     id: number;
     name: string;
     isActive: boolean;

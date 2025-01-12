@@ -6,7 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { Menu } from "../../models/menu.model";
 import { ApiService } from "../../services/api.service";
-import { NewMenuDialogComponent } from "./new-edit-menu-dialog.component";
+import { NewMenuDialogComponent } from "./new-menu-dialog.component";
 import { Restaurant } from "../../models/restaurant.model";
 import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
 
@@ -82,7 +82,7 @@ export class EditMenuDialogComponent implements OnInit {
         this.apiService.get(`/menu/getMenuDetails/${this.data.activeMenuId}`).subscribe((data: any) => {
             this.allRestaurants = data.allRestaurants;
             const restaurants = this.formGroup.get('restaurants') as FormArray;
-            
+
             this.name.setValue(data.name);
             this.previouslyLinkedRestaurants = data.linkedRestaurants;
             data.linkedRestaurants.forEach((restaurant: Restaurant) => {
@@ -110,53 +110,53 @@ export class EditMenuDialogComponent implements OnInit {
         }
     }
 
-        submit() {
-            if (this.formGroup.get('name')?.errors) {
-                this.formError = 'Name must be between 1 and 50 characters';
-                return;
-            }
-    
-            const existingNames = this.data.menus.map(m => m.name && m.id !== this.data.activeMenuId);
-            if (existingNames.includes(this.formGroup.get('name')?.value)) {
-                this.formError = 'This name already exists';
-                return;
-            }
-    
-            if (this.formGroup.get('restaurants')?.errors) {
-                this.formError = 'You must assign the menu to at least one restaurant';
-                return;
-            }
-    
-            const existingMenu = this.data.menus.find(m => m.id === this.data.activeMenuId);
-            const menuNameIsSame = existingMenu?.name === this.name.value;
-
-            const formArray = this.formGroup.get('restaurants') as FormArray;
-            let restaurantsAreSame = false;
-            if (formArray.value.length === this.previouslyLinkedRestaurants.length) {
-                restaurantsAreSame = formArray.value.every((r: Restaurant) => this.previouslyLinkedRestaurants.includes(r));
-            }
-
-            if (menuNameIsSame && restaurantsAreSame) {
-                this.dialogRef.close();
-                return;
-            }
-    
-            const request: NewMenuRequest = {
-                id: this.data.activeMenuId,
-                name: this.formGroup.get('name')?.value,
-                cloneOption: this.formGroup.get('cloneOption')?.disabled ?
-                    0 :
-                    parseInt(this.formGroup.get('cloneOption')?.value),
-                restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
-            }
-            
-            this.apiService.post('/menu/update', request).subscribe((data: any) => {
-                this.dialogRef.close(data);
-            });
-    
+    submit() {
+        if (this.formGroup.get('name')?.errors) {
+            this.formError = 'Name must be between 1 and 50 characters';
+            return;
         }
-    
-        close() {
+
+        const existingNames = this.data.menus.map(m => m.name && m.id !== this.data.activeMenuId);
+        if (existingNames.includes(this.formGroup.get('name')?.value)) {
+            this.formError = 'This name already exists';
+            return;
+        }
+
+        if (this.formGroup.get('restaurants')?.errors) {
+            this.formError = 'You must assign the menu to at least one restaurant';
+            return;
+        }
+
+        const existingMenu = this.data.menus.find(m => m.id === this.data.activeMenuId);
+        const menuNameIsSame = existingMenu?.name === this.name.value;
+
+        const formArray = this.formGroup.get('restaurants') as FormArray;
+        let restaurantsAreSame = false;
+        if (formArray.value.length === this.previouslyLinkedRestaurants.length) {
+            restaurantsAreSame = formArray.value.every((r: Restaurant) => this.previouslyLinkedRestaurants.includes(r));
+        }
+
+        if (menuNameIsSame && restaurantsAreSame) {
             this.dialogRef.close();
+            return;
         }
+
+        const request: NewMenuRequest = {
+            id: this.data.activeMenuId,
+            name: this.formGroup.get('name')?.value,
+            cloneOption: this.formGroup.get('cloneOption')?.disabled ?
+                0 :
+                parseInt(this.formGroup.get('cloneOption')?.value),
+            restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
+        }
+
+        this.apiService.post('/menu/update', request).subscribe((data: any) => {
+            this.dialogRef.close(data);
+        });
+
+    }
+
+    close() {
+        this.dialogRef.close();
+    }
 }

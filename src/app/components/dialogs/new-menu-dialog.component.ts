@@ -8,7 +8,7 @@ import { Menu } from "../../models/menu.model";
 import { CommonModule } from "@angular/common";
 import { ApiService } from "../../services/api.service";
 import { Restaurant } from "../../models/restaurant.model";
-import { NewEditMenuRequest } from "../../models/responses/new-edit-menu-request.model";
+import { NewEditMenuResponse } from "../../models/responses/new-edit-menu-response.model";
 import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
 
 @Component({
@@ -99,7 +99,7 @@ export class NewMenuDialogComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.apiService.get(`/menu/getMenuDetails/0`).subscribe((data: NewEditMenuRequest) => {
+        this.apiService.get(`/menu/getMenuDetails/0`).subscribe((data: NewEditMenuResponse) => {
             this.allRestaurants = data.allRestaurants;
             const restaurants = this.formGroup.get('restaurants') as FormArray;
 
@@ -124,14 +124,14 @@ export class NewMenuDialogComponent implements OnInit {
 
     toggleRestaurant(restaurant: Restaurant) {
         const formArray = this.formGroup.get('restaurants') as FormArray;
-        
+
         if (formArray.value.includes(restaurant)) {
             formArray.removeAt(formArray.value.indexOf(restaurant));
         } else {
             formArray.push(new FormControl(restaurant));
         }
     }
-    
+
     submit() {
         if (this.formGroup.get('name')?.errors) {
             this.formError = 'Name must be between 1 and 50 characters';
@@ -157,7 +157,7 @@ export class NewMenuDialogComponent implements OnInit {
                 parseInt(this.formGroup.get('cloneOption')?.value),
             restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
         }
-        
+
         this.apiService.post('/menu/create', request).subscribe((data: any) => {
             this.dialogRef.close(data);
         });
