@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatIconModule } from '@angular/material/icon';
 
@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
         <div class="container">
             <div class="header">
                 <div class="buttons">
-                    <mat-icon class="edit">edit</mat-icon>
+                    <mat-icon class="edit" (click)="edit(id)">edit</mat-icon>
                     <mat-icon class="delete">delete</mat-icon>
                 </div>
             </div>
@@ -34,6 +34,7 @@ export class CommonCardComponent {
     @Input() details: string[] = [];
     @Input() routeURI: string = '';
     @Input() id: number = 0;
+    @Output() editItem: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(
         private router: Router
@@ -41,5 +42,9 @@ export class CommonCardComponent {
 
     route(id: number) {
         this.router.navigate([this.routeURI, id]);
+    }
+
+    edit(item: number) {
+        this.editItem.emit(item);
     }
 }

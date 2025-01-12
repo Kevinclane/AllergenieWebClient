@@ -1,22 +1,20 @@
 import { Component } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     template: `
         <div class="header">
-            <div>
-                home logo
-            </div>
+            <mat-icon>home</mat-icon>
             <div>
                 center header message
             </div>
-            <div>
-                profile icon
-            </div>
+            <mat-icon>account_circle</mat-icon>
         </div>
     `,
     selector: 'app-header',
     standalone: true,
-    styleUrl: './header.component.scss'
+    styleUrl: './header.component.scss',
+    imports: [MatIconModule]
 })
 
 export class HeaderComponent {
