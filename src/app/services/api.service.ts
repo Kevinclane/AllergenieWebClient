@@ -36,4 +36,11 @@ export class ApiService {
             )
     }
 
+    public delete(path: string) {
+        return this._http.delete(environment.apiUrl + path)
+            .pipe(
+                catchError(this.handleError)
+            )
+    }
+
 }

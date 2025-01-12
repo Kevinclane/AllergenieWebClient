@@ -11,7 +11,7 @@ import { Utils } from '../../../services/utils';
       Add welcome message or something similar
     </div>
     <div class="container">
-      <div class="row">
+      <div class="grid">
         <app-common-card 
         *ngFor="let restaurant of restaurants" 
         [title]="restaurant.name"
@@ -24,7 +24,7 @@ import { Utils } from '../../../services/utils';
   `,
   selector: 'app-owner-dashboard',
   standalone: true,
-  styleUrl: './owner-dashboard.component.scss',
+  styleUrls: ['./owner-dashboard.component.scss', '../../common/scss-files/common-dashboard.component.scss'],
   imports: [CommonModule, CommonCardComponent]
 })
 export class OwnerDashboardComponent implements OnInit {

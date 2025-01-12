@@ -2,6 +2,7 @@
 
 .container {
     margin-top: 20px;
+    width: 20vw;
     
     .header {
         background-color: $dark-gray;
@@ -36,7 +37,6 @@
         border-radius: 0 0 10px 10px;
         background-color: $light-gray;
         color: $dark-gray;
-        width: 20vw;
         cursor: pointer;
     }
 

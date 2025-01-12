@@ -2,6 +2,14 @@
 @import '../../../styles.scss';
 
 .header {
+    mat-icon {
+        cursor: pointer;
+        height: 2rem;
+        width: 2rem;
+        font-size: 2rem;
+        margin: 0 2rem;
+    }
+
     background-color: $dark-primary;
     height: 8dvh;
     text-align: center;
