@@ -20,8 +20,9 @@ import { EditMenuDialogComponent } from "../../../dialogs/edit-menu-dialog.compo
                 <app-common-card 
                 *ngFor="let menu of menus" 
                 [title]="menu.name"
-                [id]="menu.id"
                 [details]="[menu.isActive ? 'Active' : 'Inactive']"
+                [routeURI]="'/owners/menu'"
+                [id]="menu.id"
                 (editItem)="openEditMenuDialog($event)"
                 />
             </div>

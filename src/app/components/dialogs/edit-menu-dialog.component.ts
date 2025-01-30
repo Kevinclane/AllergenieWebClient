@@ -6,7 +6,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { Menu } from "../../models/menu.model";
 import { ApiService } from "../../services/api.service";
-import { NewMenuDialogComponent } from "./new-menu-dialog.component";
 import { Restaurant } from "../../models/restaurant.model";
 import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
 
