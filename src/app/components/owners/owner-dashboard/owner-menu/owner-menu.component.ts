@@ -124,8 +124,8 @@ export class OwnerMenuComponent implements OnInit {
             return;
         }
 
-        this._apiService.post('/menu/updateFullMenu', this.groups).subscribe(() => {
-
+        this._apiService.post('/menu/updateFullMenu', this.groups).subscribe((data) => {
+            this.groups = data as MenuItemGroup[];
         });
     }
 }

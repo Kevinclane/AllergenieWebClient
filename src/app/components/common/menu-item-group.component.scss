@@ -6,9 +6,7 @@
 
     .group-header {
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @extend .justify-center;
         margin-top: 2rem;
 
         .group-input {
@@ -38,13 +36,11 @@
     }
 
     .menu-item-edit {
+        @extend .justify-center;
         background-color: $dark-gray;
         border-radius: 10px;
         padding: 3rem 0;
         margin-top: 2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         width: 100%;
 
         .menu-item-info {
