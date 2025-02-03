@@ -39,7 +39,7 @@ $dark-blue: #232D3F;
 $dark-primary: #005B41;
 $primary: #008170;
 
-$green-correct: rgba(41, 168, 98, 0.35);
+$green: rgba(41, 168, 98);
 $red: rgb(226, 40, 40);
 
 $light-gray: #f8f9fa;
@@ -156,17 +156,34 @@ input:checked+.slider:before {
 
 // End Slider
 
+//custom text input
+
+input[type="text"], textarea {
+    width: 100%;
+    color: rgb(36, 35, 42);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    border-radius: 4px;
+    padding: .25rem;
+    border: 2px solid transparent;
+    background: $light-gray;
+}
+
+//End custom text input
+
 .pointer {
     cursor: pointer;
 }
 
-//WHY isn't the background color getting set??
+.error {
+    color: $red;
+}
 
 html,
 body {
     min-height: 100%;
     margin: 0;
     font-family: ui-monospace, "Helvetica Neue", sans-serif;
-    background-color: $dark-gray;
+    background-color: $dark;
     color: $light-gray;
 }

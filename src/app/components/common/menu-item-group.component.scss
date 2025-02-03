@@ -1,0 +1,113 @@
+@import "../../../styles.scss";
+
+.container {
+    @extend .justify-center;
+    flex-direction: column;
+
+    .group-header {
+        width: 100%;
+        @extend .justify-center;
+        margin-top: 2rem;
+
+        .group-input {
+            width: 70%;
+
+            .edit-icon {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+
+                mat-icon {
+                    color: $green;
+                    height: 1.5rem;
+                    font-size: 1.5rem;
+                    transform: translateY(calc(-2rem + 2px));
+                    cursor: pointer;
+                }
+            }
+        }
+
+    }
+
+    .group-name-display {
+        display: flex;
+        align-items: center;
+    }
+
+    .menu-item-edit {
+        @extend .justify-center;
+        background-color: $dark-gray;
+        border-radius: 10px;
+        padding: 3rem 0;
+        margin-top: 2rem;
+        width: 100%;
+
+        .menu-item-info {
+            width: 70%;
+
+            .text-fields {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+
+                .input-line {
+                    width: 100%;
+                    margin-bottom: 2rem;
+                    display: flex;
+                    flex-direction: column;
+
+                    textarea {
+                        resize: vertical;
+                    }
+                }
+            }
+
+            .allergens {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                .allergen {
+                    width: 10rem;
+                }
+            }
+        }
+    }
+
+    .menu-item-display {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+}
+
+.menu-item-edit-toggle-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    mat-icon {
+        cursor: pointer;
+        height: 2rem;
+        width: 2rem;
+        font-size: 2rem;
+        margin-top: 2rem;
+        color: $green;
+    }
+}
+
+.divider {
+    width: 100%;
+    border: 2px solid $dark-gray;
+    border-radius: 50%;
+}
