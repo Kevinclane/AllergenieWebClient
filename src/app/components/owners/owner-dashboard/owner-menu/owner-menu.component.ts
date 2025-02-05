@@ -10,27 +10,46 @@ import { Utils } from "../../../../services/utils";
 import { MenuItemGroupComponent } from "../../../common/menu-item-group.component";
 import { MenuItemGroup } from "../../../../models/menu-item-group.model";
 import Swal from "sweetalert2";
+import {
+    CdkDragDrop,
+    moveItemInArray,
+    DragDropModule,
+} from '@angular/cdk/drag-drop';
 
 @Component({
     template: `
         <div class="container">
             <div class="side-bar">
-                <div *ngFor="let group of groups" class="group-list">
-                    <h3>{{group.name}}</h3>
-                    <div *ngFor="let menuItem of group.menuItems">
-                        <div>{{menuItem.name}}</div>
+                <div 
+                cdkDropList
+                (cdkDropListDropped)="drop($event)"
+                class="group-list"
+                >
+                @for (group of groups; track group) {
+                    <div class="group-card" cdkDrag>
+                        <div>
+                            <h3>{{group.name}}</h3>
+                            <div *ngFor="let menuItem of group.menuItems">
+                                <div>{{menuItem.name}}</div>
+                            </div>
+                        </div>
+                        <div class="drag-icon">
+                            <mat-icon>drag_indicator</mat-icon>
+                        </div>
                     </div>
                     <button (click)="addBlankMenuItem(group)">Add Menu Item</button>
                     <div class="divider"></div>
+                }
                 </div>
                 <button (click)="addBlankGroup()">Add Group</button>
             </div>
             <div class="main-content">
                 <app-menu-item-group 
-                *ngFor="let group of groups" 
+                *ngFor="let group of groups; let index = index" 
                 [menuItemGroup]="group" 
                 [allergens]="allergens"
-                [checkForErrors]="checkForErrors"></app-menu-item-group>
+                [checkForErrors]="checkForErrors"
+                [groupUuids]="groupUuids"></app-menu-item-group>
             </div>
         </div>
         <div class="footer">
@@ -40,7 +59,7 @@ import Swal from "sweetalert2";
     selector: 'app-owner-menu',
     standalone: true,
     styleUrl: './owner-menu.component.scss',
-    imports: [MatIconModule, CommonModule, FormsModule, MenuItemGroupComponent]
+    imports: [MatIconModule, CommonModule, FormsModule, MenuItemGroupComponent, DragDropModule]
 })
 
 export class OwnerMenuComponent implements OnInit {
@@ -60,6 +79,10 @@ export class OwnerMenuComponent implements OnInit {
         this._apiService.get('/menuItem/details/' + menuId).subscribe((data: MenuItemResponse) => {
             this.groups = data.groupedItems;
             this.allergens = data.allergens;
+            this.groups.forEach((group) => {
+                group.uuid = Utils.uuid();
+                this.groupUuids.push(group.uuid);
+            });
         });
 
     }
@@ -127,5 +150,15 @@ export class OwnerMenuComponent implements OnInit {
         this._apiService.post('/menu/updateFullMenu', this.groups).subscribe((data) => {
             this.groups = data as MenuItemGroup[];
         });
+    }
+
+        setPositions(group: MenuItemGroup[]) {
+            group.forEach((item, index) => {
+                item.position = index;
+            });
+        }
+
+    drop(event: CdkDragDrop<MenuItemGroup[]>) {
+        moveItemInArray(this.groups, event.previousIndex, event.currentIndex);
     }
 }

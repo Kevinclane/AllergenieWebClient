@@ -3,6 +3,10 @@
 .container {
     @extend .justify-center;
     flex-direction: column;
+    background-color: $dark-gray;
+    margin-top: 2rem;
+    border-radius: 10px;
+    padding: 2rem 0;
 
     .group-header {
         width: 100%;
@@ -81,11 +85,30 @@
     }
 
     .menu-item-display {
-        margin-top: 2rem;
         display: flex;
-        justify-content: center;
         align-items: center;
-        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        margin-top: 2rem;
+
+        .menu-item-display-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .drag-icon  {
+            position: absolute;
+            transform: translateX(21vw);
+            
+            mat-icon {
+                height: 2rem;
+                width: 2rem;
+                font-size: 2rem;
+                cursor: move;                
+            }
+        }
     }
 
 }
@@ -106,8 +129,28 @@
     }
 }
 
-.divider {
-    width: 100%;
-    border: 2px solid $dark-gray;
-    border-radius: 50%;
+.cdk-drag-preview {
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.menu-item-display:last-child {
+    border: none;
+}
+
+.menu-item-display.cdk-drop-list-dragging .menu-item-display:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
