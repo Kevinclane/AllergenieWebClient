@@ -20,15 +20,30 @@
             align-items: center;
             width: 100%;
             margin-top: 2rem;
+
+            .group-card {
+                display: flex;
+                align-items: center;
+                padding: 1rem;
+                background-color: $gray-2;
+                border-radius: 10px;
+
+                .drag-icon mat-icon {
+                    height: 2rem;
+                    width: 2rem;
+                    font-size: 2rem;
+                    cursor: move;
+                }
+            }
         }
-        
+
         button {
             @extend .button-primary;
             width: 90%;
         }
     }
-    
-    .main-content {    
+
+    .main-content {
         width: 100%;
         display: flex;
         align-items: center;
@@ -56,7 +71,36 @@
     align-items: center;
     justify-content: end;
 
-    .submit-button{
+    .submit-button {
         @extend .button-primary;
     }
+}
+
+
+.cdk-drag-preview {
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.group-card:last-child {
+    border: none;
+}
+
+.group-card.cdk-drop-list-dragging .group-card:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
