@@ -9,8 +9,6 @@ import {
     CdkDragDrop,
     moveItemInArray,
     transferArrayItem,
-    CdkDrag,
-    CdkDropList,
     DragDropModule,
 } from '@angular/cdk/drag-drop';
 

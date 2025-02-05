@@ -45,7 +45,7 @@ import {
             </div>
             <div class="main-content">
                 <app-menu-item-group 
-                *ngFor="let group of groups; let index = index" 
+                *ngFor="let group of groups" 
                 [menuItemGroup]="group" 
                 [allergens]="allergens"
                 [checkForErrors]="checkForErrors"
@@ -84,7 +84,6 @@ export class OwnerMenuComponent implements OnInit {
                 this.groupUuids.push(group.uuid);
             });
         });
-
     }
 
     checkForErrors(field: string, min: number, max: number) {
@@ -152,11 +151,11 @@ export class OwnerMenuComponent implements OnInit {
         });
     }
 
-        setPositions(group: MenuItemGroup[]) {
-            group.forEach((item, index) => {
-                item.position = index;
-            });
-        }
+    setPositions(group: MenuItemGroup[]) {
+        group.forEach((item, index) => {
+            item.position = index;
+        });
+    }
 
     drop(event: CdkDragDrop<MenuItemGroup[]>) {
         moveItemInArray(this.groups, event.previousIndex, event.currentIndex);
