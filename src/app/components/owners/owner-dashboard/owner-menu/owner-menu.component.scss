@@ -21,20 +21,33 @@
             width: 100%;
             margin-top: 2rem;
 
+
             .group-card {
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
+                flex-direction: column;
+                width: calc(100% - 3rem);
                 padding: 1rem;
                 background-color: $gray-2;
                 border-radius: 10px;
 
+                .group-info {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+
                 .drag-icon mat-icon {
-                    height: 2rem;
-                    width: 2rem;
-                    font-size: 2rem;
-                    cursor: move;
+                        height: 2rem;
+                        width: 2rem;
+                        font-size: 2rem;
+                        cursor: move;
+                        // transform: translateY(1rem);
+                    }
                 }
             }
+
         }
 
         button {
@@ -53,6 +66,10 @@
         app-menu-item-group {
             height: fit-content;
             width: 60%;
+        }
+
+        app-menu-item-group:last-of-type {
+            margin-bottom: 2rem;
         }
     }
 }

@@ -43,6 +43,7 @@ import {
             </ng-template>
             @for (menuItem of menuItemGroup.menuItems; track menuItem) {
                 <div [ngClass]="menuItem.isEditMode ? 'menu-item-edit' : 'menu-item-display'" 
+                id="{{menuItem.uuid}}"
                 cdkDrag>
                 <div class="image-container"></div>
                 <div *ngIf="menuItem.isEditMode; else display" class="menu-item-info">
@@ -69,12 +70,16 @@ import {
                             <label for="{{menuItem.uuid + menuItem.position + 'price'}}">Price</label>
                             <input type="text" id="{{menuItem.uuid + menuItem.position + 'price'}}" [(ngModel)]="menuItem.price" />
                         </div>
-                        <label for="{{menuItem.uuid + menuItem.position + 'allergens'}}">Allergens</label>
+                        <div>Allergens</div>
                     </div>
                     <div class="allergens">
-                        <span *ngFor="let allergen of allergens" id="{{menuItem.uuid + menuItem.position + 'allergens'}}" class="allergen">
-                            <input type="checkbox" (change)="toggleAllergen(menuItem, allergen)" [checked]="containsAllergen(menuItem, allergen)"/>
-                            <label>{{allergen.name}}</label>
+                        <span *ngFor="let allergen of allergens" class="allergen">
+                            <input 
+                            type="checkbox" 
+                            (change)="toggleAllergen(menuItem, allergen)" 
+                            [checked]="containsAllergen(menuItem, allergen)"
+                            id="{{menuItem.uuid + menuItem.position + allergen.id}}"/>
+                            <label for="{{menuItem.uuid + menuItem.position + allergen.id}}">{{allergen.name}}</label>
                         </span>
                     </div>
                     <div class="menu-item-edit-toggle-row">
@@ -90,9 +95,9 @@ import {
                         <div *ngFor="let allergen of menuItem.allergens">{{allergen.name}}</div>
                     </div>
                 </ng-template>
-                <div class="drag-icon">
-                    <mat-icon *ngIf="!menuItem.isEditMode">edit</mat-icon>
-                    <mat-icon>drag_indicator</mat-icon>
+                <div class="icon-group" *ngIf="!menuItem.isEditMode">
+                    <mat-icon class="pointer" >edit</mat-icon>
+                    <mat-icon class="move">drag_indicator</mat-icon>
                 </div>
                 <div></div>
             </div>

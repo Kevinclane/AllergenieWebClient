@@ -27,17 +27,16 @@ import {
                 >
                 @for (group of groups; track group) {
                     <div class="group-card" cdkDrag>
-                        <div>
-                            <h3>{{group.name}}</h3>
-                            <div *ngFor="let menuItem of group.menuItems">
-                                <div>{{menuItem.name}}</div>
+                        <div class="group-info">
+                            <div>
+                                <h3>{{group.name}}</h3>
+                            </div>
+                            <div class="drag-icon">
+                                <mat-icon>drag_indicator</mat-icon>
                             </div>
                         </div>
-                        <div class="drag-icon">
-                            <mat-icon>drag_indicator</mat-icon>
-                        </div>
+                        <button (click)="addBlankMenuItem(group)">Add Menu Item</button>
                     </div>
-                    <button (click)="addBlankMenuItem(group)">Add Menu Item</button>
                     <div class="divider"></div>
                 }
                 </div>
@@ -91,6 +90,7 @@ export class OwnerMenuComponent implements OnInit {
     }
 
     addBlankMenuItem(group: MenuItemGroup) {
+        const uuid: string = Utils.uuid();
         group.menuItems.push({
             id: 0,
             menuId: parseInt(this._route.snapshot.paramMap.get('id')!),
@@ -102,10 +102,19 @@ export class OwnerMenuComponent implements OnInit {
             menuItemGroupId: group.id,
             allergens: [],
             isEditMode: true,
-            uuid: Utils.uuid(),
+            uuid: uuid,
             nameError: '',
             descriptionError: ''
-        })
+        });
+        setTimeout(() => {
+            const element = document.getElementById(uuid);
+            if (element) {
+                window.scrollTo({
+                    top: element.offsetTop - (5 * parseInt(window.getComputedStyle(window.document.body).fontSize)),
+                    behavior: 'smooth'
+                });
+            }
+        }, 100);
     }
 
     addBlankGroup() {
@@ -115,7 +124,7 @@ export class OwnerMenuComponent implements OnInit {
             name: '',
             position: this.groups.length,
             menuItems: [],
-            uuid: '',
+            uuid: Utils.uuid(),
             isEditMode: true,
             groupNameError: ''
         });

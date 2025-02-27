@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
             <div class="header">
                 <div class="buttons">
                     <mat-icon class="edit" (click)="edit(id)">edit</mat-icon>
-                    <mat-icon class="delete">delete</mat-icon>
+                    <mat-icon class="delete" (click)="delete(id)">delete</mat-icon>
                 </div>
             </div>
             <div class="main-content" (click)="route(id)" >
@@ -35,6 +35,7 @@ export class CommonCardComponent {
     @Input() routeURI: string = '';
     @Input() id: number = 0;
     @Output() editItem: EventEmitter<number> = new EventEmitter<number>();
+    @Output() deleteItem: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(
         private router: Router
@@ -46,5 +47,9 @@ export class CommonCardComponent {
 
     edit(item: number) {
         this.editItem.emit(item);
+    }
+
+    delete(item: number) {
+        this.deleteItem.emit(item);
     }
 }
