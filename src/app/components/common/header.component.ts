@@ -6,7 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
         <div class="header">
             <mat-icon>home</mat-icon>
             <div>
-                center header message
+                
             </div>
             <mat-icon>account_circle</mat-icon>
         </div>

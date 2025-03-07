@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { NewMenuDialogComponent } from "../../../dialogs/new-menu-dialog.component";
 import { EditMenuDialogComponent } from "../../../dialogs/edit-menu-dialog.component";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -24,6 +25,7 @@ import { EditMenuDialogComponent } from "../../../dialogs/edit-menu-dialog.compo
                 [routeURI]="'/owners/menu'"
                 [id]="menu.id"
                 (editItem)="openEditMenuDialog($event)"
+                (deleteItem)="deleteMenu($event)"
                 />
             </div>
         </div>
@@ -89,5 +91,28 @@ export class OwnerRestaurantComponent implements OnInit {
         });
     }
 
+    deleteMenu(id: number) {
+        Swal.fire({
+
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.apiService.delete(`/menu/${id}`).subscribe(() => {
+                    this.menus = this.menus.filter((menu: Menu) => menu.id !== id);
+                });
+                Swal.fire(
+                    'Deleted!',
+                    'success'
+                )
+            }
+        })
+    }
 
 }

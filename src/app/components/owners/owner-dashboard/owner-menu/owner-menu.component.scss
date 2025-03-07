@@ -24,17 +24,29 @@
             .group-card {
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
+                flex-direction: column;
+                width: calc(100% - 3rem);
                 padding: 1rem;
                 background-color: $gray-2;
                 border-radius: 10px;
+                margin-bottom: 1rem;
+
+                .group-info {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
 
                 .drag-icon mat-icon {
-                    height: 2rem;
-                    width: 2rem;
-                    font-size: 2rem;
-                    cursor: move;
+                        height: 2rem;
+                        width: 2rem;
+                        font-size: 2rem;
+                        cursor: move;
+                    }
                 }
             }
+
         }
 
         button {
@@ -54,13 +66,11 @@
             height: fit-content;
             width: 60%;
         }
-    }
-}
 
-.divider {
-    width: 100%;
-    border: 2px solid $dark;
-    border-radius: 50%;
+        app-menu-item-group:last-of-type {
+            margin-bottom: 2rem;
+        }
+    }
 }
 
 .footer {

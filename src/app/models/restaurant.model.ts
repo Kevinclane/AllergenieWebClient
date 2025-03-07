@@ -8,4 +8,5 @@ export interface Restaurant {
     city: string;
     state: string;
     zipCode: string;
+    details: string;
 }

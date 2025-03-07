@@ -93,6 +93,11 @@ $dark: #0F0F0F;
     border-radius: 0.25rem;
 }
 
+.button-primary:disabled {
+    background-color: $gray;
+    cursor: not-allowed;
+}
+
 //Begin slider
 
 .switch {
@@ -159,7 +164,7 @@ input:checked+.slider:before {
 
 //custom text input
 
-input[type="text"], textarea {
+input[type="text"], textarea, select {
     width: 100%;
     color: rgb(36, 35, 42);
     font-size: 1rem;
@@ -174,6 +179,10 @@ input[type="text"], textarea {
 
 .pointer {
     cursor: pointer;
+}
+
+.move {
+    cursor: move;
 }
 
 .error {

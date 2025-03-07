@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { MenuItem } from "../../models/menu-item.model";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -43,38 +43,43 @@ import {
             </ng-template>
             @for (menuItem of menuItemGroup.menuItems; track menuItem) {
                 <div [ngClass]="menuItem.isEditMode ? 'menu-item-edit' : 'menu-item-display'" 
+                id="{{menuItem.uuid}}"
                 cdkDrag>
                 <div class="image-container"></div>
                 <div *ngIf="menuItem.isEditMode; else display" class="menu-item-info">
                     <div class="text-fields">
                         <div class="input-line">
                             <label for="{{menuItem.uuid + menuItem.position + 'name'}}">Name</label>
-                            <input type="text" id="{{menuItem.uuid + menuItem.position + 'name'}}" [(ngModel)]="menuItem.name" />
+                            <input type="text" id="{{menuItem.uuid + menuItem.position + 'name'}}" [(ngModel)]="menuItem.name" (ngModelChange)="setDataChanged(true)"/>
                             <div *ngIf="menuItem.nameError" class="error">
                                 {{menuItem.nameError}}
                             </div>
                         </div>
                         <div class="input-line">
                             <label for="{{menuItem.uuid + menuItem.position + 'description'}}">Description</label>
-                            <textarea id="{{menuItem.uuid + menuItem.position + 'description'}}" [(ngModel)]="menuItem.description"> </textarea>
+                            <textarea id="{{menuItem.uuid + menuItem.position + 'description'}}" [(ngModel)]="menuItem.description" (ngModelChange)="setDataChanged(true)"> </textarea>
                             <div *ngIf="menuItem.descriptionError" class="error">
                                 {{menuItem.descriptionError}}
                             </div>
                         </div>
                         <div class="input-line">
                             <label for="{{menuItem.uuid + menuItem.position + 'extraDetails'}}">Extra Details</label>
-                            <textarea id="{{menuItem.uuid + menuItem.position + 'extraDetails'}}" [(ngModel)]="menuItem.extraDetails"> </textarea>
+                            <textarea id="{{menuItem.uuid + menuItem.position + 'extraDetails'}}" [(ngModel)]="menuItem.extraDetails" (ngModelChange)="setDataChanged(true)"> </textarea>
                         </div>
                         <div class="input-line">
                             <label for="{{menuItem.uuid + menuItem.position + 'price'}}">Price</label>
-                            <input type="text" id="{{menuItem.uuid + menuItem.position + 'price'}}" [(ngModel)]="menuItem.price" />
+                            <input type="text" id="{{menuItem.uuid + menuItem.position + 'price'}}" [(ngModel)]="menuItem.price" (ngModelChange)="setDataChanged(true)"/>
                         </div>
-                        <label for="{{menuItem.uuid + menuItem.position + 'allergens'}}">Allergens</label>
+                        <div>Allergens</div>
                     </div>
                     <div class="allergens">
-                        <span *ngFor="let allergen of allergens" id="{{menuItem.uuid + menuItem.position + 'allergens'}}" class="allergen">
-                            <input type="checkbox" (change)="toggleAllergen(menuItem, allergen)" [checked]="containsAllergen(menuItem, allergen)"/>
-                            <label>{{allergen.name}}</label>
+                        <span *ngFor="let allergen of allergens" class="allergen">
+                            <input 
+                            type="checkbox" 
+                            (change)="toggleAllergen(menuItem, allergen)" 
+                            [checked]="containsAllergen(menuItem, allergen)"
+                            id="{{menuItem.uuid + menuItem.position + allergen.id}}"/>
+                            <label for="{{menuItem.uuid + menuItem.position + allergen.id}}">{{allergen.name}}</label>
                         </span>
                     </div>
                     <div class="menu-item-edit-toggle-row">
@@ -90,9 +95,9 @@ import {
                         <div *ngFor="let allergen of menuItem.allergens">{{allergen.name}}</div>
                     </div>
                 </ng-template>
-                <div class="drag-icon">
-                    <mat-icon *ngIf="!menuItem.isEditMode">edit</mat-icon>
-                    <mat-icon>drag_indicator</mat-icon>
+                <div class="icon-group" *ngIf="!menuItem.isEditMode">
+                    <mat-icon class="pointer" >edit</mat-icon>
+                    <mat-icon class="move">drag_indicator</mat-icon>
                 </div>
                 <div></div>
             </div>
@@ -110,6 +115,7 @@ export class MenuItemGroupComponent {
     @Input() menuItemGroup: MenuItemGroup | undefined;
     @Input() checkForErrors: Function = () => { return false };
     @Input() groupUuids: string[] = [];
+    @Output() dataChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {
     }
@@ -121,6 +127,7 @@ export class MenuItemGroupComponent {
 
     toggleAllergen(menuItem: MenuItem, allergen: Allergen) {
         menuItem.allergens.includes(allergen) ? menuItem.allergens.splice(menuItem.allergens.indexOf(allergen), 1) : menuItem.allergens.push(allergen);
+        this.setDataChanged(true);
     }
 
     toggleEditMode(menuItem: MenuItem) {
@@ -162,5 +169,10 @@ export class MenuItemGroupComponent {
             this.setPositions(event.container.data);
             this.setPositions(event.previousContainer.data);
         }
+        this.setDataChanged(true);
+    }
+
+    setDataChanged(event: boolean) {
+        this.dataChanged.emit(event);
     }
 }
