@@ -37,7 +37,6 @@ import {
                         </div>
                         <button (click)="addBlankMenuItem(group)">Add Menu Item</button>
                     </div>
-                    <div class="divider"></div>
                 }
                 </div>
                 <button (click)="addBlankGroup()">Add Group</button>
@@ -48,11 +47,12 @@ import {
                 [menuItemGroup]="group" 
                 [allergens]="allergens"
                 [checkForErrors]="checkForErrors"
-                [groupUuids]="groupUuids"></app-menu-item-group>
+                [groupUuids]="groupUuids"
+                (dataChanged)="setDataChanged($event)"></app-menu-item-group>
             </div>
         </div>
         <div class="footer">
-            <button class="submit-button" (click)="submit()">Save Changes</button>
+            <button class="submit-button" (click)="submit()" [disabled]="!dataChanged">Save Changes</button>
         </div>
     `,
     selector: 'app-owner-menu',
@@ -115,6 +115,7 @@ export class OwnerMenuComponent implements OnInit {
                 });
             }
         }, 100);
+        this.setDataChanged(true);
     }
 
     addBlankGroup() {
@@ -128,6 +129,7 @@ export class OwnerMenuComponent implements OnInit {
             isEditMode: true,
             groupNameError: ''
         });
+        this.setDataChanged(true);
     }
 
     submit() {
@@ -157,6 +159,7 @@ export class OwnerMenuComponent implements OnInit {
 
         this._apiService.post('/menu/updateFullMenu', this.groups).subscribe((data) => {
             this.groups = data as MenuItemGroup[];
+            this.setDataChanged(false);
         });
     }
 
@@ -168,5 +171,10 @@ export class OwnerMenuComponent implements OnInit {
 
     drop(event: CdkDragDrop<MenuItemGroup[]>) {
         moveItemInArray(this.groups, event.previousIndex, event.currentIndex);
+        this.setDataChanged(true);
+    }
+
+    setDataChanged(event: boolean) {
+        this.dataChanged = event;
     }
 }

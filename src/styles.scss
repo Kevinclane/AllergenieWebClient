@@ -93,6 +93,11 @@ $dark: #0F0F0F;
     border-radius: 0.25rem;
 }
 
+.button-primary:disabled {
+    background-color: $gray;
+    cursor: not-allowed;
+}
+
 //Begin slider
 
 .switch {

@@ -21,7 +21,6 @@
             width: 100%;
             margin-top: 2rem;
 
-
             .group-card {
                 display: flex;
                 align-items: center;
@@ -31,6 +30,7 @@
                 padding: 1rem;
                 background-color: $gray-2;
                 border-radius: 10px;
+                margin-bottom: 1rem;
 
                 .group-info {
                     display: flex;
@@ -43,7 +43,6 @@
                         width: 2rem;
                         font-size: 2rem;
                         cursor: move;
-                        // transform: translateY(1rem);
                     }
                 }
             }
@@ -72,12 +71,6 @@
             margin-bottom: 2rem;
         }
     }
-}
-
-.divider {
-    width: 100%;
-    border: 2px solid $dark;
-    border-radius: 50%;
 }
 
 .footer {
