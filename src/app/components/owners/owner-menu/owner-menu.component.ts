@@ -1,14 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import { ApiService } from "../../../../services/api.service";
-import { Allergen } from "../../../../models/allergen.model";
-import { MenuItemResponse } from "../../../../models/responses/menu-item-response.model";
+import { ApiService } from "../../../services/api.service";
+import { Allergen } from "../../../models/allergen.model";
+import { MenuItemResponse } from "../../../models/responses/menu-item-response.model";
 import { ActivatedRoute } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { Utils } from "../../../../services/utils";
-import { MenuItemGroupComponent } from "../../../common/menu-item-group.component";
-import { MenuItemGroup } from "../../../../models/menu-item-group.model";
+import { Utils } from "../../../services/utils";
+import { MenuItemGroupComponent } from "../../common/menu-item-group.component";
+import { MenuItemGroup } from "../../../models/menu-item-group.model";
 import Swal from "sweetalert2";
 import {
     CdkDragDrop,

@@ -93,6 +93,11 @@ $dark: #0F0F0F;
     border-radius: 0.25rem;
 }
 
+.button-danger {
+    @extend .button-primary;
+    background-color: $red;
+}
+
 .button-primary:disabled {
     background-color: $gray;
     cursor: not-allowed;
@@ -105,7 +110,6 @@ $dark: #0F0F0F;
     display: inline-block;
     width: 3rem;
     height: 1.5rem;
-    margin: 1rem 0 .5rem 0;
 }
 
 .switch input {
@@ -171,8 +175,13 @@ input[type="text"], textarea, select {
     line-height: 1.5rem;
     border-radius: 4px;
     padding: .25rem;
-    border: 2px solid transparent;
+    border: 1px solid $dark-gray;
     background: $light-gray;
+}
+
+input[type="text"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border: 2px solid black;
 }
 
 //End custom text input

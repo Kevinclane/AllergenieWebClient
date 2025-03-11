@@ -20,29 +20,47 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
                 </div>
                 <div class="form">
                     <div class="form-data">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" [formControl]="name"/>
-                        <div *ngIf="formError !== ''" class="errors">{{formError}}</div>
-                        <div [hidden]="data.menus.length === 0">
+                        <div class="clone-toggle-container">
+                            <div>
+                                Clone from existing menu: 
+                            </div>
                             <label for="cloneMenu" class="switch">
-                                <input type="checkbox" id="cloneMenu" (click)="toggleSlider()"/>]>
+                                <input type="checkbox" id="cloneMenu" (click)="toggleSlider()"/>
                                 <span class="slider round"></span>
                             </label>
-                            <div>
-                                Clone from: 
-                            </div>
-                            <select 
-                                name="clone-options" 
-                                id="clone-options" 
-                                [formControl]="selectedOption">
+                            <div *ngIf="formError !== ''" class="errors">{{formError}}</div>
+                        </div>
+                        <div *ngIf="restaurantCloneSelection.disabled else cloneOptionsContainer">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" [formControl]="name"/>
+                        </div>
+
+                        <ng-template #cloneOptionsContainer class="clone-options-container">
+                            <label for="clone-options-restauraunt">Restaurant</label>
+                                <select 
+                                name="clone-options-restauraunt" 
+                                id="clone-options-restauraunt" 
+                                [formControl]="restaurantCloneSelection">
                                     <option 
-                                    *ngFor="let menu of data.menus" 
+                                    *ngFor="let restaurant of allRestaurants" 
+                                    id="{{restaurant.id}}" 
+                                    [value]="restaurant.id">
+                                        {{restaurant.name}}
+                                    </option>
+                                </select>    
+                            <label for="clone-options-menu">Menu</label>
+                                <select 
+                                name="clone-options-menu" 
+                                id="clone-options-menu" 
+                                [formControl]="menuCloneSelection">
+                                    <option 
+                                    *ngFor="let menu of selectedRestaurantsMenus" 
                                     id="{{menu.id}}" 
                                     [value]="menu.id">
                                         {{menu.name}}
                                     </option>
-                            </select>
-                        </div>
+                                </select>
+                        </ng-template>
                         <div class="restaurants">
                             Assign to:
                             <div *ngFor="let restaurant of allRestaurants" >
@@ -79,27 +97,35 @@ export class NewMenuDialogComponent implements OnInit {
             Validators.minLength(1),
             Validators.maxLength(50)
         ]),
-        cloneOption: new FormControl({ value: '', disabled: true }),
+        restaurantCloneSelection: new FormControl({ value: '', disabled: true }, Validators.required),
+        menuCloneSelection: new FormControl({ value: '', disabled: true }, Validators.required),
         restaurants: new FormArray([], [
             Validators.required,
             Validators.minLength(1)
         ])
     });
     name: FormControl = this.formGroup.get('name') as FormControl;
-    selectedOption: FormControl = this.formGroup.get('cloneOption') as FormControl;
+    menuCloneSelection: FormControl = this.formGroup.get('menuCloneSelection') as FormControl;
+    restaurantCloneSelection: FormControl = this.formGroup.get('restaurantCloneSelection') as FormControl;
     formError: string = '';
     allRestaurants: Restaurant[] = [];
-
+    selectedRestaurantsMenus: Menu[] = [];
     loading: boolean = true;
 
     constructor(
-        private apiService: ApiService,
+        private _apiService: ApiService,
         public dialogRef: MatDialogRef<NewMenuDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: { menus: Menu[], restaurantId: number }
-    ) { }
+    ) { 
+        this.restaurantCloneSelection.valueChanges.subscribe((value: string) => {
+            if(value) {
+                this.getMenusByRestaurant(parseInt(value));
+            }
+        });
+    }
 
     ngOnInit(): void {
-        this.apiService.get(`/menu/getMenuDetails/0`).subscribe((data: NewEditMenuResponse) => {
+        this._apiService.get(`/menu/getMenuDetails/0`).subscribe((data: NewEditMenuResponse) => {
             this.allRestaurants = data.allRestaurants;
             const restaurants = this.formGroup.get('restaurants') as FormArray;
 
@@ -110,16 +136,22 @@ export class NewMenuDialogComponent implements OnInit {
         });
     }
 
+    getMenusByRestaurant(restaurantId: number) {
+        this._apiService.get(`/menu/all/${restaurantId}`).subscribe((data: Menu[]) => {
+            this.selectedRestaurantsMenus = data;
+            this.menuCloneSelection.enable();
+        });
+    }
+
     restaurantIsSelected(restaurant: Restaurant) {
         const formArray = this.formGroup.get('restaurants') as FormArray;
         return formArray.value.includes(restaurant);
     }
 
     toggleSlider() {
-        const cloneOption = this.formGroup.get('cloneOption') as FormControl;
-        cloneOption?.disabled ?
-            cloneOption.enable() :
-            cloneOption?.disable();
+        this.restaurantCloneSelection.disabled ?
+            this.restaurantCloneSelection.enable() :
+            this.restaurantCloneSelection.disable();
     }
 
     toggleRestaurant(restaurant: Restaurant) {
@@ -133,34 +165,38 @@ export class NewMenuDialogComponent implements OnInit {
     }
 
     submit() {
-        if (this.formGroup.get('name')?.errors) {
-            this.formError = 'Name must be between 1 and 50 characters';
-            return;
-        }
-
-        const existingNames = this.data.menus.map(m => m.name);
-        if (existingNames.includes(this.formGroup.get('name')?.value)) {
-            this.formError = 'This name already exists';
-            return;
+        let error = '';
+        if(this.restaurantCloneSelection.enabled) {
+            if (this.menuCloneSelection.errors || this.restaurantCloneSelection.errors) {
+                error = 'You must select a menu to clone from';
+            }
+        } else {
+            if (this.formGroup.get('name')?.errors) {
+                error = 'Name must be between 1 and 50 characters';
+            }
         }
 
         if (this.formGroup.get('restaurants')?.errors) {
-            this.formError = 'You must assign the menu to at least one restaurant';
-            return;
+            error = 'You must assign the menu to at least one restaurant';
         }
 
-        const request: NewMenuRequest = {
-            id: 0,
-            name: this.formGroup.get('name')?.value,
-            cloneOption: this.formGroup.get('cloneOption')?.disabled ?
-                0 :
-                parseInt(this.formGroup.get('cloneOption')?.value),
-            restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
+        this.formError = error;
+
+        if(!this.formError) {
+            const request: NewMenuRequest = {
+                id: 0,
+                name: this.formGroup.get('name')?.value,
+                cloneOptionId: this.menuCloneSelection.disabled ?
+                    0 :
+                    parseInt(this.menuCloneSelection.value),
+                restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
+            }
+    
+            this._apiService.post('/menu/create', request).subscribe((data: any) => {
+                this.dialogRef.close(data);
+            });
         }
 
-        this.apiService.post('/menu/create', request).subscribe((data: any) => {
-            this.dialogRef.close(data);
-        });
 
     }
 

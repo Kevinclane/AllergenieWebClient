@@ -9,7 +9,8 @@ import { ApiService } from "../../services/api.service";
 
 @Component({
     template: `
-        <div class="container form">
+    <div class="container">
+        <div class="form">
             <div class="col">
                 <div class="input-group">
                     <label for="name">Name</label>
@@ -66,7 +67,11 @@ import { ApiService } from "../../services/api.service";
                 </div>
             </div>
         </div>
-        <button (click)="submit()" class="button-primary">Submit</button>
+        <div class="button-group">
+            <button (click)="cancel()" class="button-danger">Cancel</button>
+            <button (click)="submit()" class="button-primary">Submit</button>
+        </div>
+    </div>
     `,
     selector: 'app-new-edit-restaurant-dialog',
     standalone: true,
@@ -226,5 +231,9 @@ export class NewEditRestaurantDialogComponent {
             return 'This field must be a valid email address';
         }
         return '';
+    }
+
+    cancel() {
+        this.dialogRef.close();
     }
 }
