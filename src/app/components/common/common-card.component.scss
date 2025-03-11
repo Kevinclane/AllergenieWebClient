@@ -3,13 +3,13 @@
 .container {
     margin-top: 20px;
     width: 20vw;
-    
+
     .header {
         background-color: $dark-gray;
         padding: .5rem;
         color: $light-gray;
         border-radius: 10px 10px 0 0;
-    
+
         .buttons {
             display: flex;
             justify-content: end;
@@ -17,6 +17,7 @@
             .edit {
                 margin-left: 1rem;
                 cursor: pointer;
+
                 &:hover {
                     color: $primary;
                 }
@@ -25,6 +26,7 @@
             .delete {
                 margin-left: 1rem;
                 cursor: pointer;
+
                 &:hover {
                     color: $red;
                 }
@@ -46,4 +48,3 @@
         font-weight: bold;
     }
 }
-

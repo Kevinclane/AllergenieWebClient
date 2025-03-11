@@ -116,9 +116,9 @@ export class NewMenuDialogComponent implements OnInit {
         private _apiService: ApiService,
         public dialogRef: MatDialogRef<NewMenuDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: { menus: Menu[], restaurantId: number }
-    ) { 
+    ) {
         this.restaurantCloneSelection.valueChanges.subscribe((value: string) => {
-            if(value) {
+            if (value) {
                 this.getMenusByRestaurant(parseInt(value));
             }
         });
@@ -166,7 +166,7 @@ export class NewMenuDialogComponent implements OnInit {
 
     submit() {
         let error = '';
-        if(this.restaurantCloneSelection.enabled) {
+        if (this.restaurantCloneSelection.enabled) {
             if (this.menuCloneSelection.errors || this.restaurantCloneSelection.errors) {
                 error = 'You must select a menu to clone from';
             }
@@ -182,7 +182,7 @@ export class NewMenuDialogComponent implements OnInit {
 
         this.formError = error;
 
-        if(!this.formError) {
+        if (!this.formError) {
             const request: NewMenuRequest = {
                 id: 0,
                 name: this.formGroup.get('name')?.value,
@@ -191,7 +191,7 @@ export class NewMenuDialogComponent implements OnInit {
                     parseInt(this.menuCloneSelection.value),
                 restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
             }
-    
+
             this._apiService.post('/menu/create', request).subscribe((data: any) => {
                 this.dialogRef.close(data);
             });

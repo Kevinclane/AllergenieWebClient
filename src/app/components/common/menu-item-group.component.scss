@@ -99,14 +99,14 @@
             flex-direction: column;
         }
 
-        .icon-group  {
+        .icon-group {
             position: absolute;
             transform: translateX(21vw);
 
             mat-icon {
                 height: 2rem;
                 width: 2rem;
-                font-size: 2rem;              
+                font-size: 2rem;
             }
         }
     }
