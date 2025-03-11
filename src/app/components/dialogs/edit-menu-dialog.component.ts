@@ -115,12 +115,6 @@ export class EditMenuDialogComponent implements OnInit {
             return;
         }
 
-        const existingNames = this.data.menus.map(m => m.name && m.id !== this.data.activeMenuId);
-        if (existingNames.includes(this.formGroup.get('name')?.value)) {
-            this.formError = 'This name already exists';
-            return;
-        }
-
         if (this.formGroup.get('restaurants')?.errors) {
             this.formError = 'You must assign the menu to at least one restaurant';
             return;
@@ -143,9 +137,7 @@ export class EditMenuDialogComponent implements OnInit {
         const request: NewMenuRequest = {
             id: this.data.activeMenuId,
             name: this.formGroup.get('name')?.value,
-            cloneOption: this.formGroup.get('cloneOption')?.disabled ?
-                0 :
-                parseInt(this.formGroup.get('cloneOption')?.value),
+            cloneOptionId: 0,
             restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
         }
 

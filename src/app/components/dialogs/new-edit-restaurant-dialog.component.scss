@@ -1,41 +1,48 @@
 @import "../../../styles.scss";
 
 .container {
-    color: $dark-gray;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    .form {
+        color: $dark-gray;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
 
-    .col {
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-        align-items: center;
-
-        .input-group {
-            width: 70%;
-            margin: 1rem 0;
+        .col {
             display: flex;
             flex-direction: column;
+            justify-content: start;
+            align-items: center;
 
-            label { 
-                transform: translateX(-0.25rem);
-            }
-    
-            input, select {
-                border: 1px solid $dark-gray;
-                transform: translateX(-0.25rem);
-            }
+            .input-group {
+                width: 70%;
+                margin: 1rem 0;
+                display: flex;
+                flex-direction: column;
 
-            select {
-                width: calc(100% + 10px);
-            }
-    
-            .error {
-                color: $red;
-                font-size: 0.75rem;
-                font-style: italic;
+                label {
+                    transform: translateX(-0.25rem);
+                }
+
+                input,
+                select {
+                    transform: translateX(-0.25rem);
+                }
+
+                select {
+                    width: calc(100% + 10px);
+                }
+
+                .error {
+                    color: $red;
+                    font-size: 0.75rem;
+                    font-style: italic;
+                }
             }
         }
     }
 
+    .button-group {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 1rem;
+    }
 }

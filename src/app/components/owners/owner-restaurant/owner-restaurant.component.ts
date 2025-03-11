@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { ApiService } from "../../../../services/api.service";
+import { ApiService } from "../../../services/api.service";
 import { ActivatedRoute } from "@angular/router";
-import { Menu } from "../../../../models/menu.model";
+import { Menu } from "../../../models/menu.model";
 import { CommonModule } from "@angular/common";
-import { CommonCardComponent } from "../../../common/common-card.component";
+import { CommonCardComponent } from "../../common/common-card.component";
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { NewMenuDialogComponent } from "../../../dialogs/new-menu-dialog.component";
-import { EditMenuDialogComponent } from "../../../dialogs/edit-menu-dialog.component";
+import { NewMenuDialogComponent } from "../../dialogs/new-menu-dialog.component";
+import { EditMenuDialogComponent } from "../../dialogs/edit-menu-dialog.component";
 import Swal from "sweetalert2";
 
 
@@ -32,7 +32,7 @@ import Swal from "sweetalert2";
     `,
     selector: 'app-owner-restaurant',
     standalone: true,
-    styleUrls: ['./owner-restaurant.component.scss', '../../../common/scss-files/common-dashboard.component.scss'],
+    styleUrls: ['./owner-restaurant.component.scss', '../../common/scss-files/common-dashboard.component.scss'],
     imports: [CommonModule, CommonCardComponent, MatIconModule],
 })
 

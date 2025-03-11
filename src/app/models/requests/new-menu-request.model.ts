@@ -2,6 +2,6 @@
 export interface NewMenuRequest {
     id: number;
     name: string;
-    cloneOption: number;
+    cloneOptionId: number;
     restaurantIds: number[];
 }

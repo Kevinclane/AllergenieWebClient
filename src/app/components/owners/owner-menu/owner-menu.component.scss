@@ -1,4 +1,4 @@
-@import "../../../../../styles.scss";
+@import "../../../../styles.scss";
 
 .container {
     display: flex;
@@ -38,7 +38,7 @@
                     justify-content: space-between;
                     width: 100%;
 
-                .drag-icon mat-icon {
+                    .drag-icon mat-icon {
                         height: 2rem;
                         width: 2rem;
                         font-size: 2rem;
