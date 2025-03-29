@@ -104,13 +104,12 @@ export class OwnerRestaurantComponent implements OnInit {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                this.apiService.delete(`/menu/${id}`).subscribe(() => {
-                    this.menus = this.menus.filter((menu: Menu) => menu.id !== id);
-                });
+                this.apiService.delete(`/menu/${id}`).subscribe(() => {});
+                this.menus = this.menus.filter((menu: Menu) => menu.id !== id);
                 Swal.fire(
                     'Deleted!',
                     'success'
-                )
+                );
             }
         })
     }
