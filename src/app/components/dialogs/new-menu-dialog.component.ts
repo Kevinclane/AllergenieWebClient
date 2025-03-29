@@ -222,7 +222,8 @@ export class NewMenuDialogComponent implements OnInit {
                     0 :
                     parseInt(this.menuCloneSelection.value),
                 isLinked: this.isLinked && this.linkedRestaurantCount() > 1,
-                restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
+                restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id),
+                baseRestaurantId: this.data.restaurantId
             }
 
             this._apiService.post('/menu/create', request).subscribe((data: any) => {

@@ -5,4 +5,5 @@ export interface NewMenuRequest {
     cloneOptionId: number;
     isLinked: boolean;
     restaurantIds: number[];
+    baseRestaurantId: number;
 }

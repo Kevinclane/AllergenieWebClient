@@ -13,7 +13,7 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
     template: `
         <div *ngIf="!loading; else spinner" class="container">
             <div >
-            <div class="notice" *ngIf="!isLinked && previouslyIsLinked">Warning! Menu cannot be relinked after save.</div>
+            <div class="notice" *ngIf="!isLinked && previouslyIsLinked">Menu cannot be relinked after save.</div>
             <div class="row justify-between">
                 <mat-icon 
                 *ngIf="canToggleLink() else link"
@@ -181,7 +181,8 @@ export class EditMenuDialogComponent implements OnInit {
             name: this.formGroup.get('name')?.value,
             cloneOptionId: 0,
             isLinked: this.isLinked,
-            restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
+            restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id),
+            baseRestaurantId: this.data.restaurantId
         }
 
         this.apiService.post('/menu/update', request).subscribe((data: any) => {
