@@ -20,7 +20,7 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
                     <mat-icon 
                     *ngIf="linkedRestaurantCount() <= 1 else link"
                     class="icon gray" 
-                    matTooltip="Link menu - data changed in one menu will be reflected in all linked menus"
+                    matTooltip="Link menu - data changed in one menu will be reflected in all restaurants using this menu"
                     matTooltipPosition="after"
                     matTooltipHideDelay="500"
                     matTooltipShowDelay="500"
@@ -31,7 +31,7 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
                         class="icon pointer" 
                         [ngClass]="isLinked ? 'primary' : ''" 
                         (click)="toggleLink()"
-                        matTooltip="Link menu - data changed in one menu will be reflected in all linked menus"
+                        matTooltip="Link menu - data changed in one menu will be reflected in all restaurants using this menu"
                         matTooltipPosition="after"
                         matTooltipHideDelay="500"
                         matTooltipShowDelay="500"
