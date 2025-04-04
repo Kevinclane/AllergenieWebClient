@@ -68,7 +68,7 @@ export class OwnerRestaurantComponent implements OnInit {
             }
         }).afterClosed().subscribe((data: any) => {
             if (data) {
-                this.menus.push(data);
+                this.getAllMenus();
             }
         });
     }
