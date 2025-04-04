@@ -96,7 +96,7 @@ import {
                     </div>
                 </ng-template>
                 <div class="icon-group" *ngIf="!menuItem.isEditMode">
-                    <mat-icon class="pointer" >edit</mat-icon>
+                    <mat-icon class="pointer" (click)="menuItem.isEditMode = true">edit</mat-icon>
                     <mat-icon class="move">drag_indicator</mat-icon>
                 </div>
                 <div></div>

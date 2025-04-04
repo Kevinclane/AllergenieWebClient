@@ -81,6 +81,10 @@ export class OwnerMenuComponent implements OnInit {
             this.groups.forEach((group) => {
                 group.uuid = Utils.uuid();
                 this.groupUuids.push(group.uuid);
+                group.menuItems.forEach((item) => {
+                    item.allergens = item.allergens ? item.allergens : [];
+                    item.uuid = Utils.uuid();
+                })
             });
         });
     }

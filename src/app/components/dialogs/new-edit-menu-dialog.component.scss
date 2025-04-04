@@ -10,10 +10,25 @@
 .container {
     color: $dark-gray;
 
+    .notice {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: orangered;
+        padding: .5rem;
+    }
+
     .row {
-        .close {
+        .icon {
             padding: 1rem;
-            cursor: pointer;
+        }
+
+        .gray {
+            color: $gray;
+        }
+
+        .primary {
+            color: $primary;
         }
     }
 

@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Menu } from "../../models/menu.model";
 import { CommonModule } from "@angular/common";
 import { ApiService } from "../../services/api.service";
@@ -15,8 +16,30 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
     template: `
         <div *ngIf="!loading; else spinner" class="container">
             <div >
-                <div class="row justify-end">
-                    <mat-icon class="close" (click)="close()">close</mat-icon>
+                <div class="row justify-between">
+                    <mat-icon 
+                    *ngIf="linkedRestaurantCount() <= 1 else link"
+                    class="icon gray" 
+                    matTooltip="Link menu - data changed in one menu will be reflected in all restaurants using this menu"
+                    matTooltipPosition="after"
+                    matTooltipHideDelay="500"
+                    matTooltipShowDelay="500"
+                    aria-label="Link menu"
+                    >link_off</mat-icon>
+                    <ng-template #link>
+                        <mat-icon 
+                        class="icon pointer" 
+                        [ngClass]="isLinked ? 'primary' : ''" 
+                        (click)="toggleLink()"
+                        matTooltip="Link menu - data changed in one menu will be reflected in all restaurants using this menu"
+                        matTooltipPosition="after"
+                        matTooltipHideDelay="500"
+                        matTooltipShowDelay="500"
+                        aria-label="Link menu"
+                        >{{isLinked ? "link" : "link_off"}}</mat-icon>
+                    </ng-template>
+                    <!-- add tooltip -->
+                    <mat-icon class="icon pointer" (click)="close()">close</mat-icon>
                 </div>
                 <div class="form">
                     <div class="form-data">
@@ -66,11 +89,11 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
                             <div *ngFor="let restaurant of allRestaurants" >
                                 <input type="checkbox"
                                 (change)="toggleRestaurant(restaurant)"
-                                id="{{restaurant.id}}"
+                                id="restaurant-{{restaurant.id}}"
                                 [value]="restaurant" 
                                 [checked]="restaurantIsSelected(restaurant)"
                                 />
-                                <label for="{{restaurant.id}}">{{restaurant.name}}</label>
+                                <label for="restaurant-{{restaurant.id}}">{{restaurant.name}}</label>
                             </div>
                         </div>
                     </div>
@@ -87,7 +110,7 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
     selector: 'app-new-edit-menu-dialog',
     standalone: true,
     styleUrl: './new-edit-menu-dialog.component.scss',
-    imports: [MatIconModule, ReactiveFormsModule, CommonModule, MatProgressSpinnerModule]
+    imports: [MatIconModule, ReactiveFormsModule, CommonModule, MatProgressSpinnerModule, MatTooltipModule]
 })
 
 export class NewMenuDialogComponent implements OnInit {
@@ -111,6 +134,7 @@ export class NewMenuDialogComponent implements OnInit {
     allRestaurants: Restaurant[] = [];
     selectedRestaurantsMenus: Menu[] = [];
     loading: boolean = true;
+    isLinked: boolean = false;
 
     constructor(
         private _apiService: ApiService,
@@ -164,6 +188,14 @@ export class NewMenuDialogComponent implements OnInit {
         }
     }
 
+    toggleLink() {
+        this.isLinked = !this.isLinked;
+    }
+
+    linkedRestaurantCount() {
+        return this.formGroup.get('restaurants')?.value.length;
+    }
+
     submit() {
         let error = '';
         if (this.restaurantCloneSelection.enabled) {
@@ -189,15 +221,15 @@ export class NewMenuDialogComponent implements OnInit {
                 cloneOptionId: this.menuCloneSelection.disabled ?
                     0 :
                     parseInt(this.menuCloneSelection.value),
-                restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
+                isLinked: this.isLinked && this.linkedRestaurantCount() > 1,
+                restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id),
+                baseRestaurantId: this.data.restaurantId
             }
 
             this._apiService.post('/menu/create', request).subscribe((data: any) => {
                 this.dialogRef.close(data);
             });
         }
-
-
     }
 
     close() {

@@ -13,8 +13,32 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
     template: `
         <div *ngIf="!loading; else spinner" class="container">
             <div >
-                <div class="row justify-end">
-                    <mat-icon class="close" (click)="close()">close</mat-icon>
+            <div class="notice" *ngIf="!isLinked && previouslyIsLinked">Menu cannot be relinked after save.</div>
+            <div class="row justify-between">
+                <mat-icon 
+                *ngIf="canToggleLink() else link"
+                class="icon pointer" 
+                [ngClass]="isLinked ? 'primary' : ''" 
+                (click)="toggleLink()"
+                matTooltip="Link menu - data changed in one menu will be reflected in all restaurants using this menu"
+                matTooltipPosition="after"
+                matTooltipHideDelay="500"
+                matTooltipShowDelay="500"
+                aria-label="Link menu">
+                    {{isLinked ? "link" : "link_off"}}
+                </mat-icon>
+                    <ng-template #link>
+                        <mat-icon 
+                        class="icon gray" 
+                        matTooltip="Link menu - data changed in one menu will be reflected in all restaurants using this menu"
+                        matTooltipPosition="after"
+                        matTooltipHideDelay="500"
+                        matTooltipShowDelay="500"
+                        aria-label="Link menu">
+                            link_off
+                        </mat-icon>
+                    </ng-template>
+                    <mat-icon class="icon pointer" (click)="close()">close</mat-icon>
                 </div>
                 <div class="form">
                     <div class="form-data">
@@ -68,6 +92,8 @@ export class EditMenuDialogComponent implements OnInit {
     formError: string = '';
     allRestaurants: Restaurant[] = [];
     previouslyLinkedRestaurants: Restaurant[] = [];
+    isLinked: boolean = false;
+    previouslyIsLinked: boolean = false;
 
     loading: boolean = true;
 
@@ -83,6 +109,8 @@ export class EditMenuDialogComponent implements OnInit {
             const restaurants = this.formGroup.get('restaurants') as FormArray;
 
             this.name.setValue(data.name);
+            this.isLinked = data.isLinked;
+            this.previouslyIsLinked = data.isLinked;
             this.previouslyLinkedRestaurants = data.linkedRestaurants;
             data.linkedRestaurants.forEach((restaurant: Restaurant) => {
                 restaurants.push(new FormControl(restaurant));
@@ -109,6 +137,19 @@ export class EditMenuDialogComponent implements OnInit {
         }
     }
 
+    
+    toggleLink() {
+        this.isLinked = !this.isLinked;
+    }
+
+    canToggleLink() {
+        return this.formGroup.get('restaurants')?.value.length > 1 || this.previouslyIsLinked;
+    }
+
+    linkedRestaurantCount() {
+        return 
+    }
+
     submit() {
         if (this.formGroup.get('name')?.errors) {
             this.formError = 'Name must be between 1 and 50 characters';
@@ -128,8 +169,9 @@ export class EditMenuDialogComponent implements OnInit {
         if (formArray.value.length === this.previouslyLinkedRestaurants.length) {
             restaurantsAreSame = formArray.value.every((r: Restaurant) => this.previouslyLinkedRestaurants.includes(r));
         }
+        const isLinkedIsSame = this.isLinked === this.previouslyIsLinked;
 
-        if (menuNameIsSame && restaurantsAreSame) {
+        if (menuNameIsSame && restaurantsAreSame && isLinkedIsSame) {
             this.dialogRef.close();
             return;
         }
@@ -138,7 +180,9 @@ export class EditMenuDialogComponent implements OnInit {
             id: this.data.activeMenuId,
             name: this.formGroup.get('name')?.value,
             cloneOptionId: 0,
-            restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id)
+            isLinked: this.isLinked,
+            restaurantIds: this.formGroup.get('restaurants')?.value.map((r: Restaurant) => r.id),
+            baseRestaurantId: this.data.restaurantId
         }
 
         this.apiService.post('/menu/update', request).subscribe((data: any) => {

@@ -68,7 +68,7 @@ export class OwnerRestaurantComponent implements OnInit {
             }
         }).afterClosed().subscribe((data: any) => {
             if (data) {
-                this.menus.push(data);
+                this.getAllMenus();
             }
         });
     }
@@ -93,7 +93,6 @@ export class OwnerRestaurantComponent implements OnInit {
 
     deleteMenu(id: number) {
         Swal.fire({
-
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
@@ -104,13 +103,13 @@ export class OwnerRestaurantComponent implements OnInit {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                this.apiService.delete(`/menu/${id}`).subscribe(() => {
+                this.apiService.delete(`/menu/${id}`).subscribe((data) => {
                     this.menus = this.menus.filter((menu: Menu) => menu.id !== id);
+                    Swal.fire(
+                        'Deleted!',
+                        'success'
+                    );
                 });
-                Swal.fire(
-                    'Deleted!',
-                    'success'
-                )
             }
         })
     }
