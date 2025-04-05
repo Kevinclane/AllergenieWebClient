@@ -15,6 +15,7 @@ import {
     moveItemInArray,
     DragDropModule,
 } from '@angular/cdk/drag-drop';
+import { HeaderStateService } from "../../../services/states/header-state.service";
 
 @Component({
     template: `
@@ -69,11 +70,14 @@ export class OwnerMenuComponent implements OnInit {
 
     constructor(
         private _apiService: ApiService,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
+        private _headerStateService: HeaderStateService
     ) {
     }
 
     ngOnInit() {
+        const title = this._route.snapshot.paramMap.get('name') || '' ;
+        this._headerStateService.setTitle(title);
         const menuId: string = this._route.snapshot.paramMap.get('id')!;
         this._apiService.get('/menuItem/details/' + menuId).subscribe((data: MenuItemResponse) => {
             this.groups = data.groupedItems;

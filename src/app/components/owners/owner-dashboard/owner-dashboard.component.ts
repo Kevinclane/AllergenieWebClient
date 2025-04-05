@@ -7,6 +7,7 @@ import { Utils } from '../../../services/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { NewEditRestaurantDialogComponent } from '../../dialogs/new-edit-restaurant-dialog.component';
 import Swal from 'sweetalert2';
+import { HeaderStateService } from '../../../services/states/header-state.service';
 
 @Component({
   template: `
@@ -36,12 +37,14 @@ export class OwnerDashboardComponent implements OnInit {
   restaurants: Restaurant[] = [];
 
   constructor(
-    private apiService: ApiService,
+    private _apiService: ApiService,
+    private _headerStateService: HeaderStateService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.apiService.get('/restaurant/all').subscribe((data: any) => {
+    this._headerStateService.setTitle('');
+    this._apiService.get('/restaurant/all').subscribe((data: any) => {
       this.restaurants = data;
     });
   }
@@ -92,7 +95,7 @@ export class OwnerDashboardComponent implements OnInit {
 
     }).then((result) => {
       if (result.isConfirmed) {
-        this.apiService.delete(`/restaurant/${id}`).subscribe(() => {
+        this._apiService.delete(`/restaurant/${id}`).subscribe(() => {
           this.restaurants = this.restaurants.filter((restaurant: Restaurant) => restaurant.id !== id);
         });
         Swal.fire(
