@@ -38,11 +38,11 @@ export class CommonCardComponent {
     @Output() deleteItem: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(
-        private router: Router
+        private _router: Router
     ) { }
 
     route(id: number) {
-        this.router.navigate([this.routeURI, id]);
+        this._router.navigate([this.routeURI, id, this.title]);
     }
 
     edit(item: number) {

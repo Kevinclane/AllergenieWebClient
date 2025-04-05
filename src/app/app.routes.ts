@@ -7,6 +7,6 @@ import { OwnerMenuComponent } from './components/owners/owner-menu/owner-menu.co
 export const routes: Routes = [
     { path: '', component: HomepageComponent },
     { path: 'owners', component: OwnerDashboardComponent },
-    { path: 'owners/restaurant/:id', component: OwnerRestaurantComponent },
-    { path: 'owners/menu/:id', component: OwnerMenuComponent }
+    { path: 'owners/restaurant/:id/:name', component: OwnerRestaurantComponent },
+    { path: 'owners/menu/:id/:name', component: OwnerMenuComponent }
 ];

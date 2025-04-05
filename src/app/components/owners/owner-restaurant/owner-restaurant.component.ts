@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewMenuDialogComponent } from "../../dialogs/new-menu-dialog.component";
 import { EditMenuDialogComponent } from "../../dialogs/edit-menu-dialog.component";
 import Swal from "sweetalert2";
+import { HeaderStateService } from "../../../services/states/header-state.service";
 
 
 @Component({
@@ -40,17 +41,20 @@ export class OwnerRestaurantComponent implements OnInit {
     menus: Menu[] = [];
 
     constructor(
-        private apiService: ApiService,
-        private route: ActivatedRoute,
+        private _apiService: ApiService,
+        private _route: ActivatedRoute,
+        private _headerStateService: HeaderStateService,
         public dialog: MatDialog
     ) { }
 
     ngOnInit() {
+        const title = this._route.snapshot.paramMap.get('name') || '' ;
+        this._headerStateService.setTitle(title);
         this.getAllMenus();
     }
 
     getAllMenus() {
-        this.apiService.get('/menu/all/' + this.route.snapshot.paramMap.get('id')).subscribe((data: any) => {
+        this._apiService.get('/menu/all/' + this._route.snapshot.paramMap.get('id')).subscribe((data: any) => {
             this.menus = data;
         });
     }
@@ -63,7 +67,7 @@ export class OwnerRestaurantComponent implements OnInit {
             width: 'auto',
             data: {
                 menus: this.menus,
-                restaurantId: this.route.snapshot.paramMap.get('id'),
+                restaurantId: this._route.snapshot.paramMap.get('id'),
                 activeMenuId: 0
             }
         }).afterClosed().subscribe((data: any) => {
@@ -81,7 +85,7 @@ export class OwnerRestaurantComponent implements OnInit {
             width: 'auto',
             data: {
                 menus: this.menus,
-                restaurantId: this.route.snapshot.paramMap.get('id'),
+                restaurantId: this._route.snapshot.paramMap.get('id'),
                 activeMenuId: menuId
             }
         }).afterClosed().subscribe((data: any) => {
@@ -103,7 +107,7 @@ export class OwnerRestaurantComponent implements OnInit {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                this.apiService.delete(`/menu/${id}`).subscribe((data) => {
+                this._apiService.delete(`/menu/${id}`).subscribe((data) => {
                     this.menus = this.menus.filter((menu: Menu) => menu.id !== id);
                     Swal.fire(
                         'Deleted!',
