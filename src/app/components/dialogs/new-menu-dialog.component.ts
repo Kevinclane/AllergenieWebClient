@@ -38,7 +38,6 @@ import { NewMenuRequest } from "../../models/requests/new-menu-request.model";
                         aria-label="Link menu"
                         >{{isLinked ? "link" : "link_off"}}</mat-icon>
                     </ng-template>
-                    <!-- add tooltip -->
                     <mat-icon class="icon pointer" (click)="close()">close</mat-icon>
                 </div>
                 <div class="form">
@@ -163,7 +162,11 @@ export class NewMenuDialogComponent implements OnInit {
     getMenusByRestaurant(restaurantId: number) {
         this._apiService.get(`/menu/all/${restaurantId}`).subscribe((data: Menu[]) => {
             this.selectedRestaurantsMenus = data;
-            this.menuCloneSelection.enable();
+            if(data.length > 0) {   
+                this.menuCloneSelection.enable();
+            } else { 
+                this.menuCloneSelection.disable();
+            }
         });
     }
 
