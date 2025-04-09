@@ -76,7 +76,7 @@ export class OwnerMenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        const title = this._route.snapshot.paramMap.get('name') || '' ;
+        const title = this._route.snapshot.paramMap.get('name') || '';
         this._headerStateService.setTitle(title);
         const menuId: string = this._route.snapshot.paramMap.get('id')!;
         this._apiService.get('/menuItem/details/' + menuId).subscribe((data: MenuItemResponse) => {
