@@ -20,6 +20,7 @@
             "outputPath": "dist/allergenie-web-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "allowedCommonJsDependencies": ["sweetalert2"],
             "polyfills": [
               "zone.js"
             ],
@@ -30,7 +31,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -44,8 +45,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "50kb",
-                  "maximumError": "100kb"
+                  "maximumWarning": "10kb",
+                  "maximumError": "20kb"
                 }
               ],
               "outputHashing": "all"

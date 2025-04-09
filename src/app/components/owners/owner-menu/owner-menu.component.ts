@@ -9,7 +9,7 @@ import { FormsModule } from "@angular/forms";
 import { Utils } from "../../../services/utils";
 import { MenuItemGroupComponent } from "../../common/menu-item-group.component";
 import { MenuItemGroup } from "../../../models/menu-item-group.model";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import {
     CdkDragDrop,
     moveItemInArray,

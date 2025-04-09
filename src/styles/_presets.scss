@@ -1,0 +1,55 @@
+@use "./_variables" as *;
+
+%justify-start {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+%justify-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%justify-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+%justify-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+%justify-around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+%button-primary {
+    background-color: $primary;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+%button-danger {
+    @extend %button-primary;
+    background-color: $red;
+}
+
+%button-disabled {
+    background-color: $gray;
+    cursor: not-allowed;
+}
