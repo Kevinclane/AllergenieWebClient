@@ -1,6 +1,6 @@
-@import "../../../../styles.scss";
-
 // This is a shared file. Some elements may exist on one file but no on the other.
+
+@use "../../../../styles/presets" as *;
 
 .container {
     margin-top: 5vh;

@@ -1,7 +1,8 @@
-@import "../../../styles.scss";
+@use "../../../styles/_presets" as *;
+@use "../../../styles/_variables" as *;
 
 .container {
-    @extend .justify-center;
+    @extend %justify-center;
     flex-direction: column;
     background-color: $dark-gray;
     margin-top: 2rem;
@@ -10,7 +11,7 @@
 
     .group-header {
         width: 100%;
-        @extend .justify-center;
+        @extend %justify-center;
         margin-top: 2rem;
 
         .group-input {
@@ -40,7 +41,7 @@
     }
 
     .menu-item-edit {
-        @extend .justify-center;
+        @extend %justify-center;
         background-color: $dark-gray;
         border: 2px solid $gray;
         border-radius: 10px;

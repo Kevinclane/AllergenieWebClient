@@ -1,4 +1,5 @@
-@import '../../../styles.scss';
+@use "../../../styles/presets" as *;
+@use "../../../styles/variables" as *;
 
 .header {
     z-index: 1000;
@@ -16,7 +17,7 @@
     text-align: center;
     color: $light-gray;
     font-size: 2.5rem;
-    @extend .justify-between;
+    @extend %justify-between;
     position: sticky;
     top: 0;
 

@@ -9,7 +9,7 @@ import { FormsModule } from "@angular/forms";
 import { Utils } from "../../../services/utils";
 import { MenuItemGroupComponent } from "../../common/menu-item-group.component";
 import { MenuItemGroup } from "../../../models/menu-item-group.model";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import {
     CdkDragDrop,
     moveItemInArray,
@@ -76,7 +76,7 @@ export class OwnerMenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        const title = this._route.snapshot.paramMap.get('name') || '' ;
+        const title = this._route.snapshot.paramMap.get('name') || '';
         this._headerStateService.setTitle(title);
         const menuId: string = this._route.snapshot.paramMap.get('id')!;
         this._apiService.get('/menuItem/details/' + menuId).subscribe((data: MenuItemResponse) => {

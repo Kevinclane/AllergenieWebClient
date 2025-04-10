@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { NewMenuDialogComponent } from "../../dialogs/new-menu-dialog.component";
 import { EditMenuDialogComponent } from "../../dialogs/edit-menu-dialog.component";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import { HeaderStateService } from "../../../services/states/header-state.service";
 
 

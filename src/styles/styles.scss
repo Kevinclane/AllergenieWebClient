@@ -1,6 +1,8 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
+@use "./_variables" as *;
+@use "./presets" as *;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -31,73 +33,73 @@ $AllergenieWebClient-theme: mat.define-light-theme((color: (primary: $Allergenie
 // that you are using.
 @include mat.all-component-themes($AllergenieWebClient-theme);
 
-$dark-blue: #232D3F;
-$dark-primary: #005B41;
-$primary: #008170;
-
-$green: rgba(41, 168, 98);
-$red: rgb(226, 40, 40);
-
-$light-gray: #f8f9fa;
-$gray: #6c757d;
-$gray-2: #454545;
-$dark-gray: #272727;
-$dark: #0F0F0F;
-
-
-.justify-start {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.justify-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.justify-end {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.justify-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.justify-around {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
 .button-primary {
-    background-color: $primary;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    margin: 0.5rem;
-    cursor: pointer;
-    border-radius: 0.25rem;
+    @extend %button-primary;
 }
 
 .button-danger {
-    @extend .button-primary;
-    background-color: $red;
+    @extend %button-danger;
 }
 
-.button-primary:disabled {
-    background-color: $gray;
-    cursor: not-allowed;
+button:disabled {
+    @extend %button-disabled;
 }
+
+.pointer {
+    cursor: pointer;
+}
+
+.move {
+    cursor: move;
+}
+
+.error {
+    color: $red;
+}
+
+.justify-start {
+    @extend %justify-start;
+}
+
+.justify-center {
+    @extend %justify-center;
+}
+
+.justify-end {
+    @extend %justify-end;
+}
+
+.justify-between {
+    @extend %justify-between;
+}
+
+.justify-around {
+    @extend %justify-around;
+}
+
+//custom text input
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    color: rgb(36, 35, 42);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    border-radius: 4px;
+    padding: .25rem;
+    border: 1px solid $dark-gray;
+    background: $light-gray;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border: 2px solid black;
+}
+
+//End custom text input
 
 //Begin slider
 
@@ -161,42 +163,6 @@ input:checked+.slider:before {
 }
 
 // End Slider
-
-//custom text input
-
-input[type="text"],
-textarea,
-select {
-    width: 100%;
-    color: rgb(36, 35, 42);
-    font-size: 1rem;
-    line-height: 1.5rem;
-    border-radius: 4px;
-    padding: .25rem;
-    border: 1px solid $dark-gray;
-    background: $light-gray;
-}
-
-input[type="text"]:focus,
-textarea:focus,
-select:focus {
-    outline: none;
-    border: 2px solid black;
-}
-
-//End custom text input
-
-.pointer {
-    cursor: pointer;
-}
-
-.move {
-    cursor: move;
-}
-
-.error {
-    color: $red;
-}
 
 html,
 body {
