@@ -33,6 +33,13 @@
                 border-radius: 10px;
                 margin-bottom: 1rem;
 
+                .delete-icon-row {
+                    .delete-icon {
+                        color: $red;
+                        cursor: pointer;
+                    }
+                }
+
                 .group-info {
                     display: flex;
                     align-items: center;
