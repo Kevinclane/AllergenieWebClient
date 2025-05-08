@@ -44,9 +44,13 @@ import {
             @for (menuItem of menuItemGroup.menuItems; track menuItem) {
                 <div [ngClass]="menuItem.isEditMode ? 'menu-item-edit' : 'menu-item-display'" 
                 id="{{menuItem.uuid}}"
-                cdkDrag>
+                cdkDrag
+                [cdkDragDisabled]="menuItem.isEditMode">
                 <div class="image-container"></div>
                 <div *ngIf="menuItem.isEditMode; else display" class="menu-item-info">
+                    <div class="delete-icon-row">
+                        <mat-icon class="delete-icon" (click)="deleteItem(menuItem)">delete</mat-icon>
+                    </div>
                     <div class="text-fields">
                         <div class="input-line">
                             <label for="{{menuItem.uuid + menuItem.position + 'name'}}">Name</label>
@@ -97,7 +101,7 @@ import {
                 </ng-template>
                 <div class="icon-group" *ngIf="!menuItem.isEditMode">
                     <mat-icon class="pointer" (click)="menuItem.isEditMode = true">edit</mat-icon>
-                    <mat-icon class="move">drag_indicator</mat-icon>
+                    <mat-icon cdkDragHandle class="move">drag_indicator</mat-icon>
                 </div>
                 <div></div>
             </div>
@@ -126,7 +130,12 @@ export class MenuItemGroupComponent {
     }
 
     toggleAllergen(menuItem: MenuItem, allergen: Allergen) {
-        menuItem.allergens.includes(allergen) ? menuItem.allergens.splice(menuItem.allergens.indexOf(allergen), 1) : menuItem.allergens.push(allergen);
+        const allergenIndex = menuItem.allergens.findIndex(a => a.id === allergen.id);
+        if (allergenIndex === -1) {
+            menuItem.allergens.push(allergen);
+        } else {
+            menuItem.allergens.splice(allergenIndex, 1)
+        }
         this.setDataChanged(true);
     }
 
@@ -174,5 +183,10 @@ export class MenuItemGroupComponent {
 
     setDataChanged(event: boolean) {
         this.dataChanged.emit(event);
+    }
+
+    deleteItem(menuItem: MenuItem) {
+        this.menuItemGroup?.menuItems.splice(menuItem.position, 1);
+        this.setDataChanged(true);
     }
 }

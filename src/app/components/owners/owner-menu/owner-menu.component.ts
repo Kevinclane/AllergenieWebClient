@@ -28,6 +28,9 @@ import { HeaderStateService } from "../../../services/states/header-state.servic
                 >
                 @for (group of groups; track group) {
                     <div class="group-card" cdkDrag>
+                    <div class="delete-icon-row">
+                        <mat-icon class="delete-icon" (click)="deleteGroup(group)">delete</mat-icon>
+                    </div>
                         <div class="group-info">
                             <div>
                                 <h3>{{group.name}}</h3>
@@ -184,5 +187,21 @@ export class OwnerMenuComponent implements OnInit {
 
     setDataChanged(event: boolean) {
         this.dataChanged = event;
+    }
+
+    deleteGroup(group: MenuItemGroup) {
+        Swal.fire({
+            text: 'Delete group and its contents?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                this.groups.splice(group.position, 1);
+                this.setDataChanged(true);
+            }
+        })
     }
 }

@@ -52,6 +52,17 @@
         .menu-item-info {
             width: 70%;
 
+            .delete-icon-row {
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                
+                .delete-icon {
+                    color: $red;
+                    cursor: pointer;
+                }
+            }
+
             .text-fields {
                 display: flex;
                 flex-direction: column;

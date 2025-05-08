@@ -84,7 +84,6 @@ export class OwnerDashboardComponent implements OnInit {
 
   deleteRestaurant(id: number) {
     Swal.fire({
-
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
